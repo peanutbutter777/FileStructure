@@ -12,13 +12,15 @@ QString data;
 class employee{
 public :QString id,name,dept,pro,city,salary,phone;
 public: int add(QString id,QString name,QString dept,QString pro,QString city,QString salary,QString phone);
-    friend int search(QString fid);
+    int search(QString fid);
     QStringList recdisp(int p);
     QStringList ssearch(QString fname);
     QStringList rems(QString skey);
     int remove(QString rid);
+    int mod(QString id,QString name,QString dept,QString pro,QString city,QString salary,QString phone,int addr);
 
 };
+employee sss;
 class index{
 public: QString id,addr;
 public: void write();
@@ -102,7 +104,7 @@ void sindex::sinit()
     sifile.close();
 }
 
-int search(QString fid)
+int employee::search(QString fid)
 {
 	int low = 0, high = ind - 1, mid;
 	while (low <= high)
@@ -132,7 +134,7 @@ QStringList employee::recdisp(int p)
 
 int employee::add(QString id, QString name, QString dept, QString pro, QString city, QString salary, QString phone){
 
-    if(search(id)!=-1){
+    if(sss.search(id)!=-1){
         return -1;
     }
     efile.open(QIODevice::Append| QIODevice::Text);
@@ -202,7 +204,7 @@ int employee::remove(QString rid){
 			break;
 		}
 
-	pos = search(rid);
+    pos = sss.search(rid);
     if(pos==-1){
         return -1;
     }

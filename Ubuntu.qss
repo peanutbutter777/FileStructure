@@ -1,8 +1,4 @@
 
-QMainWindow {
-	background-color: #f0f0f0;
-}
-
 QCheckBox {
 	padding:2px;
 }
@@ -449,7 +445,8 @@ QTabWidget {
 }
 QTabWidget::pane {
 	border-color: rgb(180,180,180);
-	background-color:qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #decba4, stop:1 #3e5151);
+	
+
 	border-style: solid;
 	border-width: 1px;
   	border-radius: 6px;

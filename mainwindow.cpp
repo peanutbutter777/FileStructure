@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
    lnum=ind1.init();
     sind1.sinit();
     ui->setupUi(this);
@@ -25,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->mlw->setHidden(true);
     ui->lcdNumber->display(lnum);
     ui->lcdNumber->show();
+    ui->tabWidget->setCurrentIndex(0);
 
     connect(ui->tabWidget, &QTabWidget::currentChanged, this, &MainWindow::on_tabWidget_currentChanged);
 
@@ -75,7 +77,7 @@ void MainWindow::on_sbi_btn_clicked()
    }
 
 
-   int p=(search(ui->sbi->text()));
+   int p=(s.search(ui->sbi->text()));
    if(p==-1){
        QMessageBox::information(nullptr, "Information", "No Record Found!");
        return;
@@ -110,7 +112,7 @@ void MainWindow::on_sbn_btn_clicked()
     ui->tableWidget->setRowCount(0);
    for ( i = 0; i < list.size(); i++) {
        QString it = list.at(i);
-       int p=search(it);
+       int p=s.search(it);
        QStringList data=s.recdisp(p);
       int rc= ui->tableWidget->rowCount();
        ui->tableWidget->setRowCount(rc+1);
@@ -175,7 +177,7 @@ void MainWindow::on_g_btn_clicked()
    ui->r_btn->setHidden(false);
 
     QString rid = item->text();
-   int p=search(rid);
+   int p=s.search(rid);
    QStringList list=s.recdisp(p);
    ui->rtable->setRowCount(1);
 
@@ -219,7 +221,7 @@ void MainWindow::on_r_btn_clicked()
 
 void MainWindow::on_rbi_btn_clicked()
 {
-       int p=search(ui->rbi->text());
+       int p=s.search(ui->rbi->text());
        if(p==-1){
            QMessageBox::warning(nullptr, "Not found", "No record found");
            return;
@@ -281,7 +283,7 @@ void MainWindow::on_g_btn_2_clicked()
     ui->r_btn_2->setHidden(false);
 
     QString rid = item->text();
-    int p=search(rid);
+    int p=s.search(rid);
     QStringList list=s.recdisp(p);
     ui->mtable->setRowCount(1);
 
@@ -292,7 +294,7 @@ void MainWindow::on_g_btn_2_clicked()
 }
     ui->mlw->clear();
     QString key=ui->mtable->item(0,0)->text();
-    s.remove(key);
+
     QFile file("employee.txt");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
                QTextStream in(&file);
@@ -313,7 +315,7 @@ void MainWindow::on_g_btn_2_clicked()
                ccount++;
            }
                }
-               ui->label_13->setText(d[0].id+d[0].name+d[1].id+d[1].name);
+
                file.close();
 
     }
@@ -338,6 +340,7 @@ void MainWindow::on_r_btn_2_clicked()
     {
                    return;
     }
+
     QFile::remove("employee.txt");
     QFile::remove("index.txt");
     QFile::remove("secindex.txt");
@@ -346,11 +349,16 @@ void MainWindow::on_r_btn_2_clicked()
 
 
     for(int z=0;z<ccount;z++){
+                   if(d[z].id.compare(key)==0){
+                        s.add(ui->mtable->item(0,0)->text(),ui->mtable->item(0,1)->text(),ui->mtable->item(0,2)->text(),ui->mtable->item(0,3)->text(),ui->mtable->item(0,4)->text(),ui->mtable->item(0,5)->text(),ui->mtable->item(0,6)->text());
+
+           continue;
+                   }
                    s.add(d[z].id,d[z].name,d[z].dept,d[z].pro,d[z].city,d[z].salary,d[z].phone);
                    lnum++;
 
     }
-    s.add(ui->mtable->item(0,0)->text(),ui->mtable->item(0,1)->text(),ui->mtable->item(0,2)->text(),ui->mtable->item(0,3)->text(),ui->mtable->item(0,4)->text(),ui->mtable->item(0,5)->text(),ui->mtable->item(0,6)->text());
+
     lnum++;
     ui->lcdNumber->display(lnum);
     ui->lcdNumber->show();
@@ -367,7 +375,7 @@ void MainWindow::on_r_btn_2_clicked()
 
 void MainWindow::on_mid_btn_clicked()
 {
-    int p=search(ui->mid->text());
+    int p=s.search(ui->mid->text());
     if(p==-1){
                    QMessageBox::warning(nullptr, "Not found", "No record found");
                    return;
@@ -382,7 +390,7 @@ void MainWindow::on_mid_btn_clicked()
 }
     ui->mlw->clear();
     QString key=ui->mtable->item(0,0)->text();
-    s.remove(key);
+
     QFile file("employee.txt");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
                    QTextStream in(&file);
@@ -403,7 +411,7 @@ void MainWindow::on_mid_btn_clicked()
                ccount++;
            }
                    }
-                   ui->label_13->setText(d[0].id+d[0].name+d[1].id+d[1].name);
+
                    file.close();
 
 }

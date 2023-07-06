@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include<QFile>
 #include <QApplication>
+#include <QLabel>
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +13,7 @@ int main(int argc, char *argv[])
         a.setStyleSheet(styleSheet);
     }
     MainWindow w;
+
      w.setWindowFlags(w.windowFlags() & ~Qt::WindowMaximizeButtonHint);
     w.setWindowState(Qt::WindowMaximized);
     w.show();
